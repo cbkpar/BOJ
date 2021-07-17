@@ -12,8 +12,7 @@ public class Main {
 		n = Integer.parseInt(br.readLine());
 		int[] arr = new int[n+1];
 		StringTokenizer st = new StringTokenizer(br.readLine());
-		for(i=1;i<=n;i++) arr[i] = Integer.parseInt(st.nextToken());
-		for(i=2;i<=n;i++) arr[i] += arr[i-1];
+		for(i=1;i<=n;i++) arr[i] = arr[i-1] + Integer.parseInt(st.nextToken());
 		m = Integer.parseInt(br.readLine());
 		while(m-->0) {
 			st = new StringTokenizer(br.readLine());
