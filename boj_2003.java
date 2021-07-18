@@ -7,7 +7,7 @@ public class Main {
 	
 	public static void main(String args[]) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int n,m,i,j,s;
+		int n,m,i,s,l,r,t;
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		n = Integer.parseInt(st.nextToken());
 		m = Integer.parseInt(st.nextToken());
@@ -15,7 +15,15 @@ public class Main {
 		st = new StringTokenizer(br.readLine());
 		for(i=1;i<=n;i++) arr[i] = arr[i-1] + Integer.parseInt(st.nextToken());
 		s = 0;
-		for(i=0;i<n;i++) for(j=i+1;j<=n;j++) if(arr[j]-arr[i]==m) s++;
+		l = 0;
+		r = 1;
+		while(true) {
+			if(r>n) break;
+			t = arr[r] - arr[l];
+			if(t>=m) l++;
+			if(t<=m) r++;
+			if(t==m) s++;
+		}
 		System.out.println(s);
 	}
 }
