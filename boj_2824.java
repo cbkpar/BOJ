@@ -26,9 +26,11 @@ public class Main {
 				}else {
 					t= gcd(b[j],a[i]);
 				}
-				a[i] /= t;
-				b[j] /= t;
-				ans = (ans*t)%100000000000L;
+				if(t!=1) {
+					a[i] /= t;
+					b[j] /= t;
+					ans = (ans*t)%100000000000L;
+				}
 			}
 		}
 		str = Long.toString(ans);
