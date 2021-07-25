@@ -28,8 +28,8 @@ public class Main {
 		s = Integer.parseInt(st.nextToken());
 		e = Integer.parseInt(st.nextToken());
 		left = 0;
-		right = 1000000000;
-		while(left<=right) {
+		right = 1000000001;
+		while(left<right) {
 			mid = (left+right)/2;
 			boolean[] visited = new boolean[100001];
 	        Queue<Integer> q = new LinkedList<>();
@@ -48,7 +48,7 @@ public class Main {
 	        if(visited[e]) {
 	        	left = mid+1;
 	        }else {
-	        	right = mid-1;
+	        	right = mid;
 	        }
 		}
 		System.out.println(left-1);
