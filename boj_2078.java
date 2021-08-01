@@ -13,13 +13,20 @@ public class Main {
     	a = Integer.parseInt(st.nextToken());
     	b = Integer.parseInt(st.nextToken());
     	while(true) {
-    		if(a==1&&b==1) break;
+    		if(a==1) {
+    			r += b-1;
+    			break;
+    		}
+    		if(b==1) {
+    			l += a-1;
+    			break;
+    		}
     		if(a>b) {
-    			l++;
-    			a -= b;
+    			l += a/b;
+    			a -= (a/b)*b;
     		}else {
-    			r++;
-    			b -= a;
+    			r += b/a;
+    			b -= (b/a)*a;
     		}
     	}
     	System.out.println(l+" "+r);
