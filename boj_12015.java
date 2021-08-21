@@ -11,14 +11,12 @@ public class Main {
 		StringBuilder sb = new StringBuilder();
 		int n,i,t,l,r,m;
 		n = Integer.parseInt(br.readLine());
-		int[][] ar = new int[n][2];
         ArrayList<Integer> arr = new ArrayList<Integer>();
 		arr.add(-1000000001);
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		for(i=0;i<n;i++) {
-			ar[i][0] = t = Integer.parseInt(st.nextToken());
+			t = Integer.parseInt(st.nextToken());
 			if(arr.get(arr.size()-1)<t) {
-				ar[i][1] = arr.size();
 				arr.add(t);
 			}else {
 				l = 0;
@@ -31,7 +29,6 @@ public class Main {
 						r = m;
 					}
 				}
-				ar[i][1] = l;
 				arr.set(l, t);
 			}
 		}
