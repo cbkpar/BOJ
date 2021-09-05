@@ -30,12 +30,14 @@ public class Main {
 			boolean[] chk = new boolean[n+1];
 			boolean ispossible = true;
 			for(i=1;i<=n;i++) {
+				if(!ispossible) break;
 				if(!chk[i]) {
 					Queue<Integer> q = new LinkedList<>();
 					q.add(i);
 					chk[i] = true;
 					z = 0;
 					while(!q.isEmpty()) {
+						if(!ispossible) break;
 						sz = q.size();
 						for(j=0;j<sz;j++) {
 							p = q.poll();
