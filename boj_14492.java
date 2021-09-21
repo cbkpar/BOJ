@@ -24,7 +24,7 @@ public class Main {
             for (j = 0; j < n; j++) {
                 boolean chk = false;
                 for (k = 0; k < n; k++) {
-                    if (A[i][k] == 1 && B[k][j] == 1) {
+                    if (A[i][k] * B[k][j] == 1) {
                         chk = true;
                         break;
                     }
