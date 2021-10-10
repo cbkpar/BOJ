@@ -1,0 +1,66 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
+
+public class Main {
+
+    public static void main(String args[]) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int[] dy = {1, 0, -1, 0};
+        int[] dx = {0, 1, 0, -1};
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int m = Integer.parseInt(st.nextToken());
+        int n = Integer.parseInt(st.nextToken());
+        boolean[][] map = new boolean[n][m];
+        boolean[][] chk = new boolean[n][m];
+        for (int i = 0; i < n; i++) {
+            String str = br.readLine();
+            for (int j = 0; j < m; j++) if (str.charAt(j) == 'B') map[i][j] = true;
+        }
+        int b = 0;
+        int w = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                int cnt = 0;
+                if (!chk[i][j]) {
+                    Queue<pos> q = new LinkedList<>();
+                    q.add(new pos(i, j));
+                    chk[i][j] = true;
+                    while (!q.isEmpty()) {
+                        pos p = q.poll();
+                        cnt++;
+                        chk[p.y][p.x] = true;
+                        for (int k = 0; k < 4; k++) {
+                            int ny = p.y + dy[k];
+                            int nx = p.x + dx[k];
+                            if (ny < 0 || ny > n - 1 || nx < 0 || nx > m - 1) continue;
+                            if (chk[ny][nx]) continue;
+                            if (map[i][j] == map[ny][nx]) {
+                                chk[ny][nx] = true;
+                                q.add(new pos(ny, nx));
+                            }
+                        }
+                    }
+                }
+                if (map[i][j]) {
+                    b += cnt * cnt;
+                } else {
+                    w += cnt * cnt;
+                }
+            }
+        }
+        System.out.println(w + " " + b);
+    }
+}
+
+class pos {
+    int y, x;
+
+    public pos(int y, int x) {
+        this.y = y;
+        this.x = x;
+    }
+}
