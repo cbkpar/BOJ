@@ -12,7 +12,7 @@ public class Main {
         while (n-- > 0) {
             int next = Integer.parseInt(br.readLine());
             int tmp = Math.abs(next - prev);
-            if (tmp > 180) tmp -= 180;
+            if (tmp > 180) tmp = 360 - tmp;
             sum += tmp;
             prev = next;
         }
