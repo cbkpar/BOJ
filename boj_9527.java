@@ -11,33 +11,21 @@ public class Main {
     public static void main(String args[]) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         dp = new long[56];
-        dp[0] = 1;
-        dp[1] = 4;
-        long tmp = 4;
-        for (int i = 2; i <= 55; i++) {
-            dp[i] = dp[i - 1] * 2 + tmp;
-            tmp *= 2;
-        }
         pow = new long[56];
-        pow[0] = 1;
-        for (int i = 1; i <= 55; i++) pow[i] = pow[i - 1] * 2;
+        dp[0] = pow[0] = 1;
+        for (int i = 1; i <= 55; i++) {
+            pow[i] = pow[i - 1] * 2;
+            dp[i] = dp[i - 1] * 2 + pow[i];
+        }
         StringTokenizer st = new StringTokenizer(br.readLine());
-        long A = Long.parseLong(st.nextToken());
+        long A = Long.parseLong(st.nextToken()) - 1;
         long B = Long.parseLong(st.nextToken());
-        System.out.println(calc(B) - calc(A - 1));
+        System.out.println(calc(B, 55) - calc(A, 55));
     }
 
-    private static long calc(long n) {
+    private static long calc(long n, int t) {
         if (n <= 1) return n;
-        long cnt = 0;
-        int t = 0;
-        while (true) {
-            if (n < pow[t]) break;
-            t++;
-        }
-        t--;
-        cnt += dp[t - 1] + n - pow[t] + 1;
-        cnt += calc(n - pow[t]);
-        return cnt;
+        while (n < pow[t]) t--;
+        return dp[t - 1] + n - pow[t] + 1 + calc(n - pow[t], t - 1);
     }
 }
