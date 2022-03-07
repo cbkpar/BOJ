@@ -8,9 +8,9 @@ class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(br.readLine());
         int minX = Integer.MAX_VALUE;
-        int maxX = 0;
+        int maxX = Integer.MIN_VALUE;
         int minY = Integer.MAX_VALUE;
-        int maxY = 0;
+        int maxY = Integer.MIN_VALUE;
         for (int i = 0; i < n; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
             int x = Integer.parseInt(st.nextToken());
