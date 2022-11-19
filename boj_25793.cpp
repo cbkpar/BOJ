@@ -4,15 +4,15 @@ using namespace std;
 
 long long lCalcCount(long long lR, long long lC)
 {
-	long long lMin = (lR > lC ? lR : lC);
+	long long lMin = (lR > lC ? lC : lR);
 	if (lMin <= 0)
 	{
 		return 0;
 	}
-	long long lTemp = lMin * lR * lC;
-	lTemp -= ((lMin - 1) * (lMin) / 2) * (lR + lC);
-	lTemp += (lMin - 1) * (lMin) * (2 * lMin - 1) / 6;
-	return lTemp;
+	long long lTempA = lMin * lR * lC;
+	long long lTempB = ((lMin - 1) * (lMin) / 2) * (lR + lC);
+	long long lTempC = ((lMin - 1) * (lMin) / 2) * (2 * lMin - 1) / 3;
+	return lTempA - lTempB + lTempC;
 }
 
 int main()
