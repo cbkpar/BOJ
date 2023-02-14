@@ -16,14 +16,15 @@ int main()
 
 	for (int i = 0; i < iN; ++i) cin >> arrNumber[i];
 	matDP[0][0] = matDP[0][1] = 1;
+	int iAns = 1;
 	for (int i = 1; i < iN; ++i)
 	{
 		matDP[i][0] = matDP[i][1] = 1;
+		if (arrNumber[i] == arrNumber[i - 1]) iAns = 2;
 		if (arrNumber[i] > arrNumber[i - 1]) matDP[i][0] = matDP[i - 1][1] + 1;
 		if (arrNumber[i] < arrNumber[i - 1]) matDP[i][1] = matDP[i - 1][0] + 1;
 	}
 
-	int iAns = 1;
 	for (int i = 0; i < iN; ++i)
 	{
 		if (matDP[i][0] > iAns) iAns = matDP[i][0];
