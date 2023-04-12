@@ -33,18 +33,17 @@ int main()
 	int iN;
 	cin >> iN;
 
-	vector<int> vecNum(iN);
+	vector<pair<int, int>> vecNum(iN);
 	vector<int> vecSort(iN);
 	for (int i = 0; i < iN; ++i)
 	{
-		cin >> vecNum[i];
-		vecSort[i] = vecNum[i];
+		cin >> vecNum[i].first;
+		vecNum[i].second = i;
 	}
-	sort(vecSort.begin(), vecSort.end());
-	map<int, int> mapNum;
+	sort(vecNum.begin(), vecNum.end());
 	for (int i = 0; i < iN; ++i)
 	{
-		mapNum.insert({ vecSort[i], i });
+		vecSort[vecNum[i].second] = i;
 	}
 
 	tree.resize(iN * 4);
@@ -54,7 +53,7 @@ int main()
 	}
 	for (int i = 0; i < iN; ++i)
 	{
-		int iSpeed = mapNum[vecNum[i]];
+		int iSpeed = vecSort[i];
 		int iRank = i + 1 - search(0, iSpeed - 1, 0, iN - 1, 1);
 		update(iSpeed, iSpeed, 0, iN - 1, 1, 1);
 		cout << iRank << "\n";
