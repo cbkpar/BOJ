@@ -5,61 +5,48 @@
 
 using namespace std;
 
-int iN;
-long long lAns;
-vector<string> vecWord;
-long long vecNum[10] = { 0, };
-bool vecVisited[10] = { false, };
-vector<bool> vecZeroPossible(10, true);
-
-void dfs(int iK)
-{
-	if (iK == 10)
-	{
-		long long lSum = 0;
-		for (int i = 0; i < iN; ++i)
-		{
-			long long lTemp = 0;
-			int iSize = vecWord[i].size();
-			for (int j = 0; j < iSize; ++j)
-			{
-				lTemp *= 10;
-				lTemp += vecNum[vecWord[i][j] - 'A'];
-			}
-			lSum += lTemp;
-		}
-		lAns = max(lAns, lSum);
-		return;
-	}
-	for (int i = 0; i < 10; ++i)
-	{
-		if (!vecVisited[i])
-		{
-			if (i == 0 && !vecZeroPossible[iK]) continue;
-			vecVisited[i] = true;
-			vecNum[iK] = i;
-			dfs(iK + 1);
-			vecVisited[i] = false;
-		}
-	}
-}
-
 int main()
 {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
 	cout.tie(NULL);
 
+	int iN;
 	cin >> iN;
+
+	vector<pair<long long, long long>> vecNum(10, { 0,0 });
 	for (int i = 0; i < iN; ++i)
 	{
 		string strWord;
 		cin >> strWord;
-		vecWord.push_back(strWord);
-		vecZeroPossible[strWord[0] - 'A'] = false;
+
+		int iSize = strWord.length();
+		long long lTemp = 1;
+		for (int j = iSize - 1; j >= 0; --j)
+		{
+			vecNum[strWord[j] - 'A'].first += lTemp;
+			lTemp *= 10;
+		}
+		vecNum[strWord[0] - 'A'].second = 1;
 	}
-	lAns = 0;
-	dfs(0);
+	
+	long long lAns = 0;
+	long long lNow = 1;
+	sort(vecNum.begin(), vecNum.end());
+	vector<bool> vecUsed(10, false);
+	for (long long i = 0; i < 10; ++i)
+	{
+		if (vecNum[i].second == 0)
+		{
+			for (int j = 0; j < 10; ++j)
+			{
+				if (i == j) continue;
+				lAns += vecNum[j].first * lNow;
+				++lNow;
+			}
+			break;
+		}
+	}
 	cout << lAns << "\n";
 	return 0;
 }
