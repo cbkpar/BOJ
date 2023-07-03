@@ -1,47 +1,54 @@
 #include <iostream>
-#include <memory.h>
-
-#define Safe_Release_Array(p) if(p){delete[] p;p=nullptr;}
+#include <vector>
+#include <algorithm>
+#include <queue>
 
 using namespace std;
 
 int main()
 {
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+
 	int iN, iClass, iRange, iCoupon;
 	cin >> iN >> iClass >> iRange >> iCoupon;
-	int* pArrFood = new int[iN];
-	memset(pArrFood, 0, sizeof(int) * iN);
-	int* pArrRef = new int[iClass];
-	memset(pArrRef, 0, sizeof(int) * (iClass));
-	int iMaxCount = 0;
-	int iCount = 1;
-	++pArrRef[iCoupon - 1];
-	for (int i = 0; i < iN; ++i)
+
+	queue<int> qNum;
+	queue<int> qRest;
+	int iMax = 1;
+	int iNow = 1;
+	vector<int> vecCount(iClass + 1, 0);
+	vecCount[iCoupon] = 1;
+	while (iN--)
 	{
-		cin >> pArrFood[i];
-		--pArrFood[i];
+		int iNum;
+		cin >> iNum;
+		if (vecCount[iNum]++ == 0) ++iNow;
+		qNum.push(iNum);
+		if (qNum.size() > iRange)
+		{
+			int iTemp = qNum.front();
+			qNum.pop();
+			qRest.push(iTemp);
+			if (--vecCount[iTemp] == 0) --iNow;
+		}
+		iMax = max(iMax, iNow);
 	}
-	for (int i = 0; i < iRange; ++i)
+	while (!qRest.empty())
 	{
-		if (0 == pArrRef[pArrFood[i]]++)
+		int iNum = qRest.front();
+		qRest.pop();
+		if (vecCount[iNum]++ == 0) ++iNow;
+		qNum.push(iNum);
+		if (qNum.size() > iRange)
 		{
-			++iCount;
+			int iTemp = qNum.front();
+			qNum.pop();
+			if (--vecCount[iTemp] == 0) --iNow;
 		}
+		iMax = max(iMax, iNow);
 	}
-	for (int i = iRange; i < iRange + iN;++i)
-	{
-		if (0 == --pArrRef[pArrFood[(i - iRange + iN) % iN]])
-		{
-			--iCount;
-		}
-		if (0 == pArrRef[pArrFood[i % iN]]++)
-		{
-			++iCount;
-		}
-		iMaxCount = iMaxCount > iCount ? iMaxCount : iCount;
-	}
-	cout << iMaxCount << endl;
-	Safe_Release_Array(pArrRef);
-	Safe_Release_Array(pArrFood);
+	cout << iMax << "\n";
 	return 0;
 }
