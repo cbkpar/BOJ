@@ -29,21 +29,39 @@ int main()
 		cin >> vecP[i];
 	}
 
-	int iAns = 0;
-	for (int i = 1; i <= iN; ++i)
+	vector<int> vecH(iH + 1, 0);
+	int iTempIndex = 1;
+	for (int i = 1; i <= iH; ++i)
 	{
-		if (vecA[i - 1] < iD && iD >= vecA[i])
+		vecH[i] = vecH[i - 1] + vecP[iTempIndex];
+		if (vecA[iTempIndex] == i)
 		{
-			iAns += (iD - vecA[i]) * vecP[i];
-			iAns += iW * vecP[i];
-			break;
-		}
-		else
-		{
-			iAns += (vecA[i] - vecA[i - 1]) * vecP[i];
+			++iTempIndex;
 		}
 	}
 
+	int iAns = 1000000000;
+	iTempIndex = 1;
+	for (int i = 0; i <= iH; ++i)
+	{
+		if (i != iH && vecA[iTempIndex] == i)
+		{
+			++iTempIndex;
+		}
+
+		int iTempCost = iW * vecP[iTempIndex];
+
+		if (iD < i)
+		{
+			iTempCost += vecH[iD];
+			iTempCost += (vecH[i] - vecH[iD]) * 2;
+		}
+		else
+		{
+			iTempCost += vecH[iD];
+		}
+		iAns = min(iAns, iTempCost);
+	}
 
 	cout << iAns << "\n";
 	return 0;
